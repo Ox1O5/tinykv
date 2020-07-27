@@ -29,7 +29,9 @@ var (
 )
 
 func main() {
+	//命令行解析
 	flag.Parse()
+	//加载默认配置
 	conf := config.NewDefaultConfig()
 	if *schedulerAddr != "" {
 		conf.SchedulerAddr = *schedulerAddr
@@ -47,7 +49,7 @@ func main() {
 	log.SetLevelByString(conf.LogLevel)
 	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds | log.Lshortfile)
 	log.Infof("Server started with conf %+v", conf)
-
+	//storage interface：启动、停止、读、写
 	var storage storage.Storage
 	if conf.Raft {
 		storage = raft_storage.NewRaftStorage(conf)
